@@ -5,10 +5,10 @@ CREATE DATABASE `catalogue` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `catalogue`;
 
 CREATE TABLE `members` (
-  `id` int(1000) NOT NULL AUTO_INCREMENT,
+  `id` int(100) NOT NULL AUTO_INCREMENT,
   `phone_number1` int(15) unsigned NOT NULL,
-  `phone_number2` int(15) unsigned NOT NULL,
-  `name` varchar(30) NOT NULL,
+  `phone_number2` bigint(15) unsigned NOT NULL,
+  `name` varchar(40) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id`(id));
 
@@ -59,7 +59,7 @@ public class JavaApplication43 {
             while(rs.next()){
                 int id = rs.getInt("id");
                 int phone_number1 = rs.getInt("phone_number1");
-                int phone_number2 = rs.getInt("phone_number2");
+                long phone_number2 = rs.getLong("phone_number2");
                 String name = rs.getString("Name");
                 
                 System.out.println("ActorID: "+id);
