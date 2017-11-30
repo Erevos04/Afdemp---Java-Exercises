@@ -6,18 +6,16 @@ USE `catalogue`;
 
 CREATE TABLE `members` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
-  `phone_number1` int(15) unsigned NOT NULL,
-  `phone_number2` bigint(15) unsigned NOT NULL,
+  `phone_number1` varchar(15) NOT NULL,
+  `phone_number2` varchar(15) NOT NULL,
   `name` varchar(40) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id`(id));
 
 INSERT INTO `members` (`id`, `phone_number1`, `phone_number2`, `name`) VALUES
-(1,	2106789345,	6984562452, 'Dimitriou Alexis'),
-(2,	2108935682,	6945678234,	'Alexiadis Dimitris'),
-(3, 2108734987, 6943577881, 'Sotirakopoulos Manolis');
-
-
+(1,	'2106789345',	'6984562452', 'Dimitriou Alexis'),
+(2,	'2108935682',	'6945678234', 'Alexiadis Dimitris'),
+(3, '2108734987',   '6943577881', 'Sotirakopoulos Manolis');
 
 package javaapplication43;
 
@@ -58,8 +56,8 @@ public class JavaApplication43 {
             
             while(rs.next()){
                 int id = rs.getInt("id");
-                int phone_number1 = rs.getInt("phone_number1");
-                long phone_number2 = rs.getLong("phone_number2");
+                String phone_number1 = rs.getString("phone_number1");
+                String phone_number2 = rs.getString("phone_number2");
                 String name = rs.getString("Name");
                 
                 System.out.println("ActorID: "+id);
