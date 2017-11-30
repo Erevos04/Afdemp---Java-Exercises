@@ -1,0 +1,18 @@
+SET NAMES utf8;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+CREATE DATABASE `catalogue` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `catalogue`;
+
+CREATE TABLE `members` (
+  `id` int(1000) NOT NULL AUTO_INCREMENT,
+  `phone_number1` int(15) unsigned NOT NULL,
+  `phone_number2` int(15) unsigned NOT NULL,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id`(id));
+
+INSERT INTO `members` (`id`, `phone_number1`, `phone_number2`, `name`) VALUES
+(1,	2106789345,	6984562452, 'Dimitriou Alexis'),
+(2,	2108935682,	6945678234,	'Alexiadis Dimitris'),
+(3, 2108734987, 6943577881, 'Sotirakopoulos Manolis');
