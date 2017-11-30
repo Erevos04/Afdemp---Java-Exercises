@@ -60,7 +60,7 @@ public class JavaApplication43 {
                 String phone_number2 = rs.getString("phone_number2");
                 String name = rs.getString("Name");
                 
-                System.out.println("ActorID: "+id);
+                System.out.println("ID: "+id);
                 System.out.println(", Firt Number: "+phone_number1);
                 System.out.println(", Second Number: "+phone_number2);
                 System.out.println(", Name : "+name);
