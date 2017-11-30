@@ -16,3 +16,79 @@ INSERT INTO `members` (`id`, `phone_number1`, `phone_number2`, `name`) VALUES
 (1,	2106789345,	6984562452, 'Dimitriou Alexis'),
 (2,	2108935682,	6945678234,	'Alexiadis Dimitris'),
 (3, 2108734987, 6943577881, 'Sotirakopoulos Manolis');
+
+
+
+package javaapplication43;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author Orestis
+ */
+public class JavaApplication43 {
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost/catalogue?autoReconnect=true&useSSL=false";
+    static final String USER = "root";
+    static final String PASS ="afdemp";
+    
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        Statement stmt = null;
+        
+        try {
+            
+            
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+            
+            System.out.println("Creating statement....");
+            stmt = conn.createStatement();
+            String sql;
+            sql = "SELECT * FROM members";
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            while(rs.next()){
+                int id = rs.getInt("id");
+                int phone_number1 = rs.getInt("phone_number1");
+                int phone_number2 = rs.getInt("phone_number2");
+                String name = rs.getString("Name");
+                
+                System.out.println("ActorID: "+id);
+                System.out.println(", Firt Number: "+phone_number1);
+                System.out.println(", Second Number: "+phone_number2);
+                System.out.println(", Name : "+name);
+            }
+            
+            rs.close();
+            stmt.close();
+            conn.close();
+            }
+         catch (SQLException ex) {
+            Logger.getLogger(JavaApplication43.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+        finally {
+            try{
+                if (stmt!=null)
+                    stmt.close();
+            }catch(SQLException se2){}
+            try{
+                if(conn!=null)
+                    conn.close();
+            }
+            catch(SQLException se){
+                se.printStackTrace();
+            }
+        }
+        
+        System.out.println("Finished!");
+    }}
