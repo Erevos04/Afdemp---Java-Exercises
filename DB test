@@ -17,6 +17,20 @@ INSERT INTO `members` (`id`, `phone_number1`, `phone_number2`, `name`) VALUES
 (2,	'2108935682',	'6945678234', 'Alexiadis Dimitris'),
 (3, '2108734987',   '6943577881', 'Sotirakopoulos Manolis');
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 package javaapplication43;
 
 import java.sql.Connection;
@@ -24,6 +38,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,15 +65,66 @@ public class JavaApplication43 {
             
             System.out.println("Creating statement....");
             stmt = conn.createStatement();
-            String sql;
-            sql = "SELECT * FROM members";
-            ResultSet rs = stmt.executeQuery(sql);
+            String sql1;
+            sql1 = "SELECT * FROM members";
+            ResultSet rs1 = stmt.executeQuery(sql1);
             
-            while(rs.next()){
-                int id = rs.getInt("id");
-                String phone_number1 = rs.getString("phone_number1");
-                String phone_number2 = rs.getString("phone_number2");
-                String name = rs.getString("Name");
+            while(rs1.next()){
+                int id = rs1.getInt("id");
+                String phone_number1 = rs1.getString("phone_number1");
+                String phone_number2 = rs1.getString("phone_number2");
+                String name = rs1.getString("Name");
+                
+                System.out.println("ID: "+id);
+                System.out.println(", Firt Number: "+phone_number1);
+                System.out.println(", Second Number: "+phone_number2);
+                System.out.println(", Name : "+name);
+            }
+            Scanner sc = new Scanner(System.in);
+            String inptname;
+            System.out.println("Please select a name from DB.");
+            inptname=sc.nextLine();
+            stmt = conn.createStatement();
+            ResultSet rs2 = stmt.executeQuery("SELECT `name` FROM members");
+            while(rs2.next()){
+            String name = rs2.getString("Name");
+                if (name.equals(inptname)){
+                    stmt = conn.createStatement();
+                    ResultSet rs3 = stmt.executeQuery("SELECT * FROM members WHERE name='"+inptname+"';");
+                    while(rs3.next()){
+                        int id = rs3.getInt("id");
+                        String phone_number1 = rs3.getString("phone_number1");
+                        String phone_number2 = rs3.getString("phone_number2");
+                        name = rs3.getString("Name");
+                
+                        System.out.println("ID: "+id);
+                        System.out.println(", Firt Number: "+phone_number1);
+                        System.out.println(", Second Number: "+phone_number2);
+                        System.out.println(", Name : "+name);
+                        }
+                }    
+            }
+            
+            String newname;
+            String newnumber;
+            System.out.println("Please insert Name for new entry : ");
+            newname=sc.nextLine();
+            System.out.println("Please insert Phone number for new entry : ");
+            newnumber=sc.nextLine();
+            
+            stmt = conn.createStatement();
+            int rs4 = stmt.executeUpdate("INSERT INTO members (`phone_number1`,`phone_number2`,`name`) VALUES ('"+newnumber+"','"+newnumber+"','"+newname+"');");
+            if (rs4==0) {
+                System.out.println("Insert failed.");
+            }
+            
+            ResultSet rs5 = stmt.executeQuery("SELECT * FROM members");
+            
+            while(rs5.next()){
+                int id = rs5.getInt("id");
+                String phone_number1 = rs5.getString("phone_number1");
+                String phone_number2 = rs5.getString("phone_number2");
+                String name = rs5.getString("Name");
                 
                 System.out.println("ID: "+id);
                 System.out.println(", Firt Number: "+phone_number1);
@@ -66,10 +132,16 @@ public class JavaApplication43 {
                 System.out.println(", Name : "+name);
             }
             
-            rs.close();
+            
+        
+         
+            
+            
+            rs1.close();
+            rs2.close();
             stmt.close();
             conn.close();
-            }
+        }
          catch (SQLException ex) {
             Logger.getLogger(JavaApplication43.class.getName()).log(Level.SEVERE, null, ex);
         }
