@@ -62,7 +62,7 @@ public class JavaApplication43 {
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
-            
+            Scanner sc = new Scanner(System.in);
             System.out.println("Creating statement....");
             stmt = conn.createStatement();
             String sql1;
@@ -80,14 +80,49 @@ public class JavaApplication43 {
                 System.out.println(", Second Number: "+phone_number2);
                 System.out.println(", Name : "+name);
             }
-            Scanner sc = new Scanner(System.in);
+            
+            
+            String crt ="CREATE TABLE IF NOT EXISTS `birthday`" +
+                            "(`memberid` int(100) auto_increment NOT NULL," +
+                            "`birthday` date NOT NULL," +
+                            "FOREIGN KEY (`memberid`) REFERENCES `members` (`id`));";
+            System.out.println(crt);
+            stmt = conn.createStatement();
+            int rs = stmt.executeUpdate(crt);
+            if (rs>0){ 
+                System.out.println("Create Success");
+            }
+            else {
+                System.out.println("Table exists");
+            }
+            
+            stmt = conn.createStatement();
+            ResultSet rs6 = stmt.executeQuery("SELECT `name` FROM members");
+            while(rs6.next()){
+                String name = rs6.getString("name");
+                System.out.println("Type birthday for user : "+name);
+                String birthday = sc.next();
+                stmt = conn.createStatement();
+                int rs7 = stmt.executeUpdate("INSERT INTO birthday (`birthday`) VALUES ('"+birthday+"')");
+            }
+        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             String inptname;
             System.out.println("Please select a name from DB.");
             inptname=sc.nextLine();
             stmt = conn.createStatement();
             ResultSet rs2 = stmt.executeQuery("SELECT `name` FROM members");
             while(rs2.next()){
-            String name = rs2.getString("Name");
+            String name = rs2.getString("name");
                 if (name.equals(inptname)){
                     stmt = conn.createStatement();
                     ResultSet rs3 = stmt.executeQuery("SELECT * FROM members WHERE name='"+inptname+"';");
@@ -127,7 +162,7 @@ public class JavaApplication43 {
                 String name = rs5.getString("Name");
                 
                 System.out.println("ID: "+id);
-                System.out.println(", Firt Number: "+phone_number1);
+                System.out.println(", First Number: "+phone_number1);
                 System.out.println(", Second Number: "+phone_number2);
                 System.out.println(", Name : "+name);
             }
@@ -161,4 +196,5 @@ public class JavaApplication43 {
         }
         
         System.out.println("Finished!");
-    }}
+    }
+}
