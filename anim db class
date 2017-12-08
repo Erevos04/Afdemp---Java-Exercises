@@ -1,0 +1,124 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package anidvb;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author chris
+ */
+public class animdb {
+
+    private Connection conn = null;
+    private Statement stmt = null;
+    private ResultSet rs = null;
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/animals";
+    private static final String USER = "root";
+    private static final String PASS = "chris";
+    public static ArrayList<Animal> animalsReturn = new ArrayList<Animal>();
+    public static ArrayList<Animal> animals = new ArrayList<Animal>();
+    public PreparedStatement pstmt;
+
+    public void DbConnect() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println("gwreergergergregrgr");
+        }
+    }
+
+    public ArrayList<Animal> Getlist() {
+       return animals;
+    }
+    
+ /*   public void printArr(){       
+        for (Animal x : animalsReturn) {
+             System.out.println(" "+x.url+" "+x.name+" "+x.type+" "+x.age);                
+        }        
+    } */
+    
+    public ArrayList<Animal> GetReadyList() {
+        return animalsReturn;
+    }
+    
+    public void copyToListM(ArrayList<Animal> i) {
+        for (Animal x : i) {
+              animals.add(x);
+        }
+    }
+    
+    public void showList() {
+         DbConnect();
+         Animal draft;
+        try {
+           
+            pstmt = conn.prepareStatement("SELECT * FROM animals.animals;");
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                draft=new Animal() ;
+                double age = rs.getDouble("age");
+                String name = rs.getString("name");
+                String url = rs.getString("url");
+                String type = rs.getString("type");
+                int id = rs.getInt("id");
+                draft.age = age;
+                draft.name = name;
+                draft.type = type;
+                draft.url = url;
+                animalsReturn.add(draft);
+//                System.out.println(id+" "+url+" "+name+" "+type+" "+age);
+//                System.out.println(draft.id+" "+draft.url+" "+draft.name+" "+draft.type+" "+draft.age);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(animdb.class.getName()).log(Level.SEVERE, null, ex);
+        }                   
+    }
+
+    public void populateDatabase(ArrayList<Animal> ani) {
+        DbConnect();
+        System.out.println("");
+         int u = 0;
+        try {
+           
+            for (Animal x : ani) {
+
+                if (x.type.equals("cat") || x.type.equals("dog")) {
+                    pstmt = conn.prepareStatement("INSERT INTO animals(url, name, type, age) VALUES (?,?,?,?);");
+                    pstmt.setString(1, x.url);
+                    pstmt.setString(2, x.name);
+                    pstmt.setString(3, x.type);
+                    pstmt.setDouble(4, x.age);
+                    pstmt.executeUpdate();
+                } else {
+
+                    System.out.println("wrong data");
+
+                    u = 10;
+
+                }
+            }
+            if (u != 10) {
+                pstmt.close();
+                //u=0;
+            }
+
+            conn.close();
+        } catch (SQLException ex) {
+            // Logger.getLogger(AnimalsDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+}
