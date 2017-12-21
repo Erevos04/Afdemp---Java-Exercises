@@ -55,15 +55,15 @@ protected static ArrayList Roll(){
 }
 
 protected static String GenerateNow( int x ){
-    String win=null;
+    String ticket=null;
     for ( int i=0 ; i<x ; i++){
     System.out.println("The winning Number is : ");
-    win = Roll().get(i)+"-"+LotteryGen();
-    System.out.println(win);
+    ticket = Roll().get(i)+"-"+LotteryGen();
+    System.out.println(ticket);
     }
     
     
-         return win;
+         return ticket;
          
          
      }
