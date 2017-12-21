@@ -54,13 +54,16 @@ protected static ArrayList Roll(){
     
 }
 
-protected static String GenerateNow( int x ){
+static int ticket_count=0;
+
+protected static String GenerateNow(int ticket_count){
     String ticket=null;
-    for ( int i=0 ; i<x ; i++){
-    System.out.println("The winning Number is : ");
-    ticket = Roll().get(i)+"-"+LotteryGen();
+    
+    System.out.println("The Ticket Number is : ");
+    ticket = Roll().get(ticket_count-1)+"-"+LotteryGen();
     System.out.println(ticket);
-    }
+    
+    ticket_count++;
     
     
          return ticket;
@@ -68,5 +71,7 @@ protected static String GenerateNow( int x ){
          
      }
     
+
+
 }
 
