@@ -1,6 +1,7 @@
 package com.websystique.springmvc.model;
 
  
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,14 +14,10 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
  
-import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
  
 @Entity
 @Table(name="PRODUCTS")
-public class Products {
+public class Products implements Serializable {
  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,50 +60,88 @@ public class Products {
     @ManyToOne
     @JoinColumn(name="PR_ID", nullable=false)
     private MemberSales membersales;
-    
-    
- 
-    public int getpr_id() {
+
+    public int getPr_id() {
         return pr_id;
     }
- 
-    public void setpr_id(int pr_id) {
+
+    public void setPr_id(int pr_id) {
         this.pr_id = pr_id;
     }
- 
+
     public String getName() {
         return name;
     }
- 
+
     public void setName(String name) {
         this.name = name;
     }
- 
-    
-    
- 
-    public double getprice_in() {
+
+    public int getCategory() {
+        return category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public double getPrice_in() {
         return price_in;
     }
- 
-    public void setprice_in(double price_in) {
+
+    public void setPrice_in(double price_in) {
         this.price_in = price_in;
     }
- 
-    public double getprice_out() {
+
+    public double getPrice_out() {
         return price_out;
     }
- 
-    public void setprice_out(double price_out) {
+
+    public void setPrice_out(double price_out) {
         this.price_out = price_out;
     }
- 
+
+    public Wishlist getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(Wishlist wishlist) {
+        this.wishlist = wishlist;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public MemberSales getMembersales() {
+        return membersales;
+    }
+
+    public void setMembersales(MemberSales membersales) {
+        this.membersales = membersales;
+    }
+    
     
  
- 
-    @Override
-    public String toString() {
-        return "";
-    }
-     
+    
 }

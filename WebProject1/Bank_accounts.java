@@ -5,16 +5,12 @@
  */
 package com.websystique.springmvc.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,10 +19,10 @@ import org.springframework.format.annotation.DateTimeFormat;
  
 @Entity
 @Table(name="BANK_ACCOUNTS")
-public class Bank_accounts {
+public class Bank_accounts implements Serializable {
     
     @Id
-    @Column(name="USER_ID",nullable=false)
+    @Column(name="USER_ID",unique=true,nullable=false)
     private int user_id;
     
     @NotNull
@@ -38,5 +34,29 @@ public class Bank_accounts {
     @Column(name = "DATE", nullable = false)
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate date;
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
     
 }

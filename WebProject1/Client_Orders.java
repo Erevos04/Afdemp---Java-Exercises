@@ -6,31 +6,22 @@
 package com.websystique.springmvc.model;
 
 import java.io.Serializable;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
- 
 
- 
 @Entity
-@Table(name="WISHLIST")
-public class Wishlist implements Serializable {
-    
-    
+@Table(name="CLIENT_ORDERS")
+public class Client_Orders implements Serializable {
+   
     @Id
     @Column(name="USER_ID",unique=true,nullable=false)
     private int user_id;
     
-    @NotNull
-    @Column(name="PR_ID",unique=true,nullable=false)
-    private int pr_id;
-    
-    @OneToMany(mappedBy="PRODUCTS")
-    private Set <Products> products;
+    @Id
+    @Column(name="ORDER_ID",unique=true,nullable=false)
+    private int order_id;
 
     public int getUser_id() {
         return user_id;
@@ -40,22 +31,13 @@ public class Wishlist implements Serializable {
         this.user_id = user_id;
     }
 
-    public int getPr_id() {
-        return pr_id;
+    public int getOrder_id() {
+        return order_id;
     }
 
-    public void setPr_id(int pr_id) {
-        this.pr_id = pr_id;
+    public void setOrder_id(int order_id) {
+        this.order_id = order_id;
     }
-
-    public Set<Products> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Products> products) {
-        this.products = products;
-    }
-    
     
     
 }
